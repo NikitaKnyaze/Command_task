@@ -27,8 +27,7 @@ public:
       file.open("MessageFile.txt", std::ios::app); 
 
       if (!file) {
-         std::cerr << "Error opening file" << std::endl;
-         return;
+         throw std::runtime_error("Error opening file");
       }
    }
 
@@ -41,7 +40,7 @@ public:
       }
       else
       {
-         std::cerr <<"Error. File was not open"<<std::endl;
+         throw std::runtime_error("Error opening file");
       }
    }
 
@@ -59,9 +58,17 @@ void print(LogCommand& comm)
 
 int main()
 {
-   FileMessage mess;
+   try
+   {
+      FileMessage mess;
+      print(mess);
+   }
+   catch(const std::exception &e)
+   {
+      std::cout << e.what() << std::endl;
+   }
+
    ConsoleMessage mess_1;
-   print(mess);
    print(mess_1);
 
    return 0;
